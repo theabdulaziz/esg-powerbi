@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "ESG Tracker"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "653a0a7f-46bc-5e44-823d-1e7e81743ad1"
+  }
+}

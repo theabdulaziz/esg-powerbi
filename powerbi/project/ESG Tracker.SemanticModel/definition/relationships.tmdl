@@ -1,0 +1,27 @@
+relationship 5f517bed-e856-5bcb-8277-e62addc30bcc
+	fromColumn: Observations.iso3
+	toColumn: Country.iso3
+
+relationship 78e84f68-dd0a-5502-b649-eed3b0b80a8b
+	fromColumn: Observations.indicator_id
+	toColumn: Indicator.indicator_id
+
+relationship 5a068ec4-13dd-594f-8b41-221677a1a597
+	fromColumn: Observations.year
+	toColumn: Years.year
+
+relationship 86a93072-0807-5fa3-87d4-51f28868be84
+	fromColumn: Scores.iso3
+	toColumn: Country.iso3
+
+relationship 29b61275-fd17-5c4d-ac21-f720cba0397c
+	fromColumn: Scores.year
+	toColumn: Years.year
+
+relationship 7d5c2b68-aede-5ccb-a600-b0c7b41a79a0
+	fromColumn: Latest.iso3
+	toColumn: Country.iso3
+
+relationship 1433942e-6e7e-5734-9bd7-c370f2b1afae
+	fromColumn: Latest.indicator_id
+	toColumn: Indicator.indicator_id

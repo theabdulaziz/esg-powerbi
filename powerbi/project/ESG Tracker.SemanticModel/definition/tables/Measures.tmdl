@@ -1,0 +1,192 @@
+table Measures
+	lineageTag: 7b321440-5e24-5df5-9377-a723c3d0fac6
+
+	measure 'Country Count' = COUNTROWS ( Country )
+		formatString: #,0
+		lineageTag: 2696a743-5758-56c3-8043-e32b59f57983
+
+	measure 'Indicator Count' = COUNTROWS ( Indicator )
+		formatString: #,0
+		lineageTag: ce8f19a9-7c47-568e-a172-eda0f9298a84
+
+	measure 'Reported Values' = CALCULATE ( COUNTROWS ( Observations ), Observations[is_carried_forward] = 0 )
+		formatString: #,0
+		lineageTag: 7ded029d-7eda-5044-9013-f9fa2aa281e0
+
+	measure 'Possible Values' = [Country Count] * [Indicator Count] * COUNTROWS ( Years )
+		formatString: #,0
+		lineageTag: 8c9812af-b59f-5532-8a21-831c130df791
+
+	measure 'Coverage %' = DIVIDE ( [Reported Values], [Possible Values] )
+		formatString: 0.0%
+		lineageTag: 45abbc0f-8cb7-525f-bba3-b437aef1a08c
+
+	measure 'Carried Forward %' =
+			DIVIDE (
+			    CALCULATE ( COUNTROWS ( Observations ), Observations[is_carried_forward] = 1 ),
+			    COUNTROWS ( Observations )
+			)
+		formatString: 0.0%
+		lineageTag: 27fcac50-a65e-549c-943c-be524f248e63
+
+	measure 'Selected Year' = MAX ( Years[year] )
+		formatString: 0
+		lineageTag: 9d18f6e2-ec4e-57e9-a95e-51345680eacb
+
+	measure 'ESG Score' =
+			VAR y = [Selected Year]
+			RETURN
+			    CALCULATE ( AVERAGE ( Scores[score] ), Scores[pillar] = "ESG", Years[year] = y )
+		formatString: 0.0
+		lineageTag: 2fa65dd6-5df6-5a6d-b18e-528aaed2a9fa
+
+	measure 'Environment Score' =
+			VAR y = [Selected Year]
+			RETURN
+			    CALCULATE ( AVERAGE ( Scores[score] ), Scores[pillar] = "Environment", Years[year] = y )
+		formatString: 0.0
+		lineageTag: f650351c-2c4e-5a00-935c-6a274af3249e
+
+	measure 'Social Score' =
+			VAR y = [Selected Year]
+			RETURN
+			    CALCULATE ( AVERAGE ( Scores[score] ), Scores[pillar] = "Social", Years[year] = y )
+		formatString: 0.0
+		lineageTag: 7983f6eb-e628-5c4f-b9d1-03a5b266e5f0
+
+	measure 'Governance Score' =
+			VAR y = [Selected Year]
+			RETURN
+			    CALCULATE ( AVERAGE ( Scores[score] ), Scores[pillar] = "Governance", Years[year] = y )
+		formatString: 0.0
+		lineageTag: 9817a9f7-4599-54cc-a77b-8892855d861b
+
+	measure 'Pillar Score' =
+			VAR y = [Selected Year]
+			RETURN
+			    CALCULATE ( AVERAGE ( Scores[score] ), Years[year] = y )
+		formatString: 0.0
+		lineageTag: d029ff22-d9f1-570d-b941-ca7c2a926223
+
+	measure 'ESG Rank' =
+			VAR y = [Selected Year]
+			RETURN
+			    IF (
+			        HASONEVALUE ( Country[iso3] ),
+			        CALCULATE ( MIN ( Scores[rank_in_year] ), Scores[pillar] = "ESG", Years[year] = y )
+			    )
+		formatString: #,0
+		lineageTag: ef85cc30-e386-5e2a-985f-57801950df4a
+
+	measure 'Ranked Countries' =
+			VAR y = [Selected Year]
+			RETURN
+			    CALCULATE (
+			        DISTINCTCOUNT ( Scores[iso3] ),
+			        Scores[pillar] = "ESG",
+			        Years[year] = y,
+			        REMOVEFILTERS ( Country )
+			    )
+		formatString: #,0
+		lineageTag: 49a41760-7ef7-50b6-906d-0cd7d52f3f3e
+
+	measure 'ESG Rank Label' = IF ( NOT ISBLANK ( [ESG Rank] ), [ESG Rank] & " of " & [Ranked Countries] )
+		lineageTag: 95191f63-abc4-51c7-9eeb-b50a7b3ca64b
+
+	measure 'ESG Score 5Y Change' =
+			VAR y = [Selected Year]
+			VAR cur = [ESG Score]
+			VAR prev =
+			    CALCULATE ( AVERAGE ( Scores[score] ), Scores[pillar] = "ESG", Years[year] = y - 5 )
+			RETURN
+			    IF ( NOT ISBLANK ( cur ) && NOT ISBLANK ( prev ), cur - prev )
+		formatString: +0.0;-0.0;0.0
+		lineageTag: 86ce0016-37cc-5d3d-b441-b0bf4f5e7b26
+
+	measure 'World ESG Score' = CALCULATE ( [ESG Score], REMOVEFILTERS ( Country ) )
+		formatString: 0.0
+		lineageTag: ecb0da56-99d2-5d2e-9066-22de22fd4dba
+
+	measure 'Region ESG Score' =
+			VAR r = SELECTEDVALUE ( Country[region] )
+			RETURN
+			    IF (
+			        NOT ISBLANK ( r ),
+			        CALCULATE ( [ESG Score], REMOVEFILTERS ( Country ), Country[region] = r )
+			    )
+		formatString: 0.0
+		lineageTag: e6fa5f50-ba53-58b3-831c-b1f8e85104de
+
+	measure 'ESG vs Region' =
+			IF (
+			    NOT ISBLANK ( [ESG Score] ) && NOT ISBLANK ( [Region ESG Score] ),
+			    [ESG Score] - [Region ESG Score]
+			)
+		formatString: +0.0;-0.0;0.0
+		lineageTag: e18b7c29-59cb-5034-ab87-133cb6b6acb0
+
+	measure 'Indicator Value' =
+			VAR y = [Selected Year]
+			RETURN
+			    IF (
+			        HASONEVALUE ( Indicator[indicator_id] ),
+			        CALCULATE ( AVERAGE ( Observations[value] ), Years[year] = y )
+			    )
+		formatString: #,0.00
+		lineageTag: 606f0a94-52db-525c-9570-fb605365b065
+
+	measure 'Indicator Score' =
+			VAR y = [Selected Year]
+			RETURN
+			    CALCULATE ( AVERAGE ( Observations[score] ), Years[year] = y )
+		formatString: 0.0
+		lineageTag: 7a26d816-61b5-59dd-883f-32161a93d436
+
+	measure 'Value Reported In' =
+			VAR y = [Selected Year]
+			RETURN
+			    CALCULATE ( MAX ( Observations[reported_year] ), Years[year] = y )
+		formatString: 0
+		lineageTag: 057fd42f-9801-50b6-8d95-ef43f249b75c
+
+	measure 'Series With Data' = COUNTROWS ( Latest )
+		formatString: #,0
+		lineageTag: bc630606-b0df-5552-9631-1c8ac7a14056
+
+	measure 'Series Never Reported' = [Country Count] * [Indicator Count] - [Series With Data]
+		formatString: #,0
+		lineageTag: af014820-9a48-5a74-bfde-7b9a0cff8050
+
+	measure 'Avg Years Since Update' = AVERAGE ( Latest[years_since_update] )
+		formatString: 0.0
+		lineageTag: d758db63-7327-56db-acec-acf96b06feb5
+
+	measure 'Stale Series' = CALCULATE ( COUNTROWS ( Latest ), Latest[years_since_update] >= 5 )
+		formatString: #,0
+		lineageTag: e276a973-111a-5981-8ff2-c2a5434ced46
+
+	measure 'Stale Series %' = DIVIDE ( [Stale Series], [Series With Data] )
+		formatString: 0.0%
+		lineageTag: 2c691dd6-b77d-503b-9d88-ba71aaa9d001
+
+	measure 'Profile Title' =
+			"ESG profile: "
+			    & SELECTEDVALUE ( Country[country], "select one country" )
+			    & ", " & [Selected Year]
+		lineageTag: 334e2add-d5ef-5468-bd9a-807f70606d1d
+
+	measure 'Overview Title' = "Sovereign ESG scores, " & [Selected Year]
+		lineageTag: 5e353250-0ba8-57ea-8b3a-2789c31df162
+
+	column Hidden
+		dataType: string
+		isHidden
+		lineageTag: 56ccbcb8-84cd-5ec7-9580-79660ba863d0
+		summarizeBy: none
+		sourceColumn: Hidden
+
+	partition Measures = m
+		mode: import
+		source = #table(type table [Hidden = text], {})
+
+	annotation PBI_ResultType = Table

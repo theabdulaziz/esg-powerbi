@@ -1,0 +1,47 @@
+table Country
+	lineageTag: a46824e8-cafa-5fed-ba7a-da3caf6dbc68
+
+	column iso3
+		dataType: string
+		lineageTag: 74d93ce0-c702-59e7-8205-0bc265d5dc5c
+		summarizeBy: none
+		sourceColumn: iso3
+
+		annotation SummarizationSetBy = User
+
+	column country
+		dataType: string
+		lineageTag: 0a5cbb83-4bae-5cd4-a110-abec78ffe355
+		dataCategory: Country
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = User
+
+	column region
+		dataType: string
+		lineageTag: e677be2a-9734-594a-8b28-6fb6ca4fdb29
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = User
+
+	column sub_region
+		dataType: string
+		lineageTag: 9f354fa6-44cf-5403-9df1-1174ef2fbe97
+		summarizeBy: none
+		sourceColumn: sub_region
+
+		annotation SummarizationSetBy = User
+
+	partition Country = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(Web.Contents(DataSource, [RelativePath = "dim_country.csv"]), [Delimiter = ",", Columns = 4, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"iso3", type text}, {"country", type text}, {"region", type text}, {"sub_region", type text}}, "en-US")
+				in
+					Typed
+
+	annotation PBI_ResultType = Table

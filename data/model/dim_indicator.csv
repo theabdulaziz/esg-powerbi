@@ -1,0 +1,68 @@
+indicator_id,indicator,pillar,theme,direction,in_score,direction_reason
+EN.ATM.CO2E.PC,CO2 emissions (metric tons per capita),Environment,Emissions & Pollution,lower_better,true,Lower emissions per person
+EN.CLC.GHGR.MT.CE,GHG net emissions/removals by LUCF (Mt of CO2 equivalent),Environment,Emissions & Pollution,context,false,Absolute tonnes not scaled by country size; sparse
+EN.ATM.METH.PC,Methane emissions (metric tons of CO2 equivalent per capita),Environment,Emissions & Pollution,lower_better,true,Lower emissions per person
+EN.ATM.NOXE.PC,Nitrous oxide emissions (metric tons of CO2 equivalent per capita),Environment,Emissions & Pollution,lower_better,true,Lower emissions per person
+EN.ATM.PM25.MC.M3,"PM2.5 air pollution, mean annual exposure (micrograms per cubic meter)",Environment,Emissions & Pollution,lower_better,true,Cleaner air
+EG.ELC.COAL.ZS,Electricity production from coal sources (% of total),Environment,Energy use & security,lower_better,true,Coal is the most carbon-intensive source of electricity
+EG.IMP.CONS.ZS,"Energy imports, net (% of energy use)",Environment,Energy use & security,context,false,Importing energy is a security consideration with no clear direction
+EG.EGY.PRIM.PP.KD,Energy intensity level of primary energy (MJ/$2011 PPP GDP),Environment,Energy use & security,lower_better,true,Less energy per unit of output
+EG.USE.PCAP.KG.OE,Energy use (kg of oil equivalent per capita),Environment,Energy use & security,context,false,Tracks income and climate as much as efficiency
+EG.USE.COMM.FO.ZS,Fossil fuel energy consumption (% of total),Environment,Energy use & security,lower_better,true,Smaller share of energy from fossil fuels
+EG.ELC.RNEW.ZS,Renewable electricity output (% of total electricity output),Environment,Energy use & security,higher_better,true,Larger share of electricity from renewables
+EG.FEC.RNEW.ZS,Renewable energy consumption (% of total final energy consumption),Environment,Energy use & security,higher_better,true,Larger share of energy use from renewables
+EN.CLC.CDDY.XD,Cooling Degree Days (projected change in number of degree Celsius),Environment,Environment/climate risk & resilience,context,false,Single projection for 2050; not an annual observation
+EN.CLC.MDAT.ZS,"Droughts, floods, extreme temperatures (% of population, average 1990-2009)",Environment,Environment/climate risk & resilience,context,false,One historical average per country; no time series
+EN.CLC.HEAT.XD,Heat Index 35 (projected change in days),Environment,Environment/climate risk & resilience,context,false,Single projection for 2050; not an annual observation
+EN.CLC.PRCP.XD,"Maximum 5-day Rainfall, 25-year Return Level (projected change in mm)",Environment,Environment/climate risk & resilience,context,false,Single projection for 2050; not an annual observation
+EN.CLC.SPEI.XD,"Mean Drought Index (projected change, unitless)",Environment,Environment/climate risk & resilience,context,false,Single projection for 2050; not an annual observation
+EN.POP.DNST,Population density (people per sq. km of land area),Environment,Environment/climate risk & resilience,context,false,Descriptive
+AG.LND.AGRI.ZS,Agricultural land (% of land area),Environment,Food security,context,false,Share of land farmed is neither good nor bad in itself
+NV.AGR.TOTL.ZS,"Agriculture, forestry, and fishing, value added (% of GDP)",Environment,Food security,context,false,Structure of the economy; no clear direction
+AG.PRD.FOOD.XD,Food production index (2014-2016 = 100),Environment,Food security,context,false,Index relative to each country's own base period; not comparable across countries
+NY.ADJ.DRES.GN.ZS,Adjusted savings: natural resources depletion (% of GNI),Environment,Natural capital endowment and management,lower_better,true,Less natural resource depletion relative to income
+NY.ADJ.DFOR.GN.ZS,Adjusted savings: net forest depletion (% of GNI),Environment,Natural capital endowment and management,lower_better,true,Less forest depletion relative to income
+ER.H2O.FWTL.ZS,"Annual freshwater withdrawals, total (% of internal resources)",Environment,Natural capital endowment and management,lower_better,true,Less pressure on internal freshwater resources
+AG.LND.FRST.ZS,Forest area (% of land area),Environment,Natural capital endowment and management,context,false,Depends on natural geography; a desert country is not a poor performer
+EN.MAM.THRD.NO,"Mammal species, threatened",Environment,Natural capital endowment and management,context,false,Raw count not scaled by number of species present
+ER.PTD.TOTL.ZS,Terrestrial and marine protected areas (% of total territorial area),Environment,Natural capital endowment and management,higher_better,true,More territory under protection
+IC.BUS.EASE.XQ,Ease of doing business rank (1=most business-friendly regulations),Governance,Economic environment,lower_better,true,Rank where 1 is the most business-friendly
+NY.GDP.MKTP.KD.ZG,GDP growth (annual %),Governance,Economic environment,context,false,Volatile year to year and not a measure of social outcomes
+IT.NET.USER.ZS,Individuals using the Internet (% of population),Governance,Economic environment,higher_better,true,Wider internet access
+SG.GEN.PARL.ZS,Proportion of seats held by women in national parliaments (%),Governance,Gender,higher_better,true,More women in parliament
+SL.TLF.CACT.FM.ZS,Ratio of female to male labor force participation rate (%) (modeled ILO estimate),Governance,Gender,higher_better,true,Women's labour force participation closer to men's
+SE.ENR.PRSC.FM.ZS,"School enrollment, primary and secondary (gross), gender parity index (GPI)",Governance,Gender,context,false,Best value is parity (1.0) so it is not monotonic
+SP.UWT.TFRT,Unmet need for contraception (% of married women ages 15-49),Governance,Gender,lower_better,true,Less unmet need for contraception
+GE.EST,Government Effectiveness: Estimate,Governance,Government effectiveness,higher_better,true,Worldwide Governance Indicator; higher is better governance
+RQ.EST,Regulatory Quality: Estimate,Governance,Government effectiveness,higher_better,true,Worldwide Governance Indicator; higher is better governance
+IC.LGL.CRED.XQ,Strength of legal rights index (0=weak to 12=strong),Governance,Human rights,higher_better,true,Stronger legal rights for borrowers and lenders
+VA.EST,Voice and Accountability: Estimate,Governance,Human rights,higher_better,true,Worldwide Governance Indicator; higher is better governance
+IP.PAT.RESD,"Patent applications, residents",Governance,Innovation,context,false,Raw count not scaled by population
+GB.XPD.RSDV.GD.ZS,Research and development expenditure (% of GDP),Governance,Innovation,higher_better,true,More investment in research and development
+IP.JRN.ARTC.SC,Scientific and technical journal articles,Governance,Innovation,context,false,Raw count not scaled by population
+CC.EST,Control of Corruption: Estimate,Governance,Stability & rule of law,higher_better,true,Worldwide Governance Indicator; higher is better governance
+SM.POP.NETM,Net migration,Governance,Stability & rule of law,context,false,Descriptive
+PV.EST,Political Stability and Absence of Violence/Terrorism: Estimate,Governance,Stability & rule of law,higher_better,true,Worldwide Governance Indicator; higher is better governance
+RL.EST,Rule of Law: Estimate,Governance,Stability & rule of law,higher_better,true,Worldwide Governance Indicator; higher is better governance
+EG.CFT.ACCS.ZS,Access to clean fuels and technologies for cooking (% of population),Social,Access to services,higher_better,true,Wider access to clean cooking fuels
+EG.ELC.ACCS.ZS,Access to electricity (% of population),Social,Access to services,higher_better,true,Wider access to electricity
+SH.H2O.SMDW.ZS,People using safely managed drinking water services (% of population),Social,Access to services,higher_better,true,Wider access to safe drinking water
+SH.STA.SMSS.ZS,People using safely managed sanitation services (% of population),Social,Access to services,higher_better,true,Wider access to safe sanitation
+SP.DYN.TFRT.IN,"Fertility rate, total (births per woman)",Social,Demography,context,false,Descriptive
+SP.DYN.LE00.IN,"Life expectancy at birth, total (years)",Social,Demography,higher_better,true,Longer life expectancy
+SP.POP.65UP.TO.ZS,Population ages 65 and above (% of total population),Social,Demography,context,false,Descriptive
+SE.XPD.TOTL.GB.ZS,"Government expenditure on education, total (% of government expenditure)",Social,Education & skills,higher_better,true,Larger share of public spending on education
+SE.ADT.LITR.ZS,"Literacy rate, adult total (% of people ages 15 and above)",Social,Education & skills,higher_better,true,Higher adult literacy
+SE.PRM.ENRR,"School enrollment, primary (% gross)",Social,Education & skills,context,false,Gross rate can exceed 100 through over-age enrolment
+SL.TLF.0714.ZS,"Children in employment, total (% of children ages 7-14)",Social,Employment,lower_better,true,Less child labour
+SL.TLF.ACTI.ZS,"Labor force participation rate, total (% of total population ages 15-64) (modeled ILO estimate)",Social,Employment,context,false,Reflects demographics and schooling as well as opportunity
+SL.UEM.TOTL.ZS,"Unemployment, total (% of total labor force) (modeled ILO estimate)",Social,Employment,lower_better,true,Lower unemployment
+SH.DTH.COMM.ZS,"Cause of death, by communicable diseases and maternal, prenatal and nutrition conditions (% of total)",Social,Health & nutrition,lower_better,true,Fewer deaths from preventable causes
+SH.MED.BEDS.ZS,"Hospital beds (per 1,000 people)",Social,Health & nutrition,higher_better,true,More hospital capacity
+SH.DYN.MORT,"Mortality rate, under-5 (per 1,000 live births)",Social,Health & nutrition,lower_better,true,Lower child mortality
+SH.STA.OWAD.ZS,Prevalence of overweight (% of adults),Social,Health & nutrition,lower_better,true,Lower prevalence of overweight
+SN.ITK.DEFC.ZS,Prevalence of undernourishment (% of population),Social,Health & nutrition,lower_better,true,Less undernourishment
+SI.SPR.PCAP.ZG,"Annualized average growth rate in per capita real survey mean consumption or income, total population (%)",Social,Poverty & inequality,context,false,One observation per country; no time series
+SI.POV.GINI,Gini index (World Bank estimate),Social,Poverty & inequality,lower_better,true,Lower income inequality
+SI.DST.FRST.20,Income share held by lowest 20%,Social,Poverty & inequality,higher_better,true,Larger income share for the poorest fifth
+SI.POV.NAHC,Poverty headcount ratio at national poverty lines (% of population),Social,Poverty & inequality,lower_better,true,Lower poverty

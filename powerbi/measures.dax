@@ -1,0 +1,191 @@
+// =====================================================================
+//  Sovereign ESG Tracker: DAX measures
+//
+//  Tables (after renaming in Power Query):
+//    Country, Indicator, Years            dimensions
+//    Observations, Scores, Latest         facts
+//
+//  How to add: Modeling > New measure, paste ONE measure at a time
+//  (everything from the name to the blank line), set the format shown
+//  in the comment ("Year" means whole number with no thousands separator).
+//  Put them all in the Observations table or in an
+//  empty "Measures" table.
+//
+//  Convention: every score measure reports the LATEST year in the
+//  current selection. On a chart with year on the axis that is each
+//  year in turn; on a card with a year slicer it is the slicer's last year.
+// =====================================================================
+
+
+// ---------- 1. Counts and coverage ----------
+
+// Format: Whole number
+Country Count = COUNTROWS ( Country )
+
+// Format: Whole number
+Indicator Count = COUNTROWS ( Indicator )
+
+// Values actually reported for that year (not carried forward).  Format: Whole number
+Reported Values =
+CALCULATE ( COUNTROWS ( Observations ), Observations[is_carried_forward] = 0 )
+
+// Every country x indicator x year cell that could have a value.  Format: Whole number
+Possible Values = [Country Count] * [Indicator Count] * COUNTROWS ( Years )
+
+// Format: Percentage, 1 decimal
+Coverage % = DIVIDE ( [Reported Values], [Possible Values] )
+
+// Share of values in the model that stand in for a missing year.  Format: Percentage, 1 decimal
+Carried Forward % =
+DIVIDE (
+    CALCULATE ( COUNTROWS ( Observations ), Observations[is_carried_forward] = 1 ),
+    COUNTROWS ( Observations )
+)
+
+
+// ---------- 2. Scores (0 to 100, higher is better) ----------
+
+// Format: Year
+Selected Year = MAX ( Years[year] )
+
+// Format: Decimal, 1 decimal
+ESG Score =
+VAR y = [Selected Year]
+RETURN
+    CALCULATE ( AVERAGE ( Scores[score] ), Scores[pillar] = "ESG", Years[year] = y )
+
+// Format: Decimal, 1 decimal
+Environment Score =
+VAR y = [Selected Year]
+RETURN
+    CALCULATE ( AVERAGE ( Scores[score] ), Scores[pillar] = "Environment", Years[year] = y )
+
+// Format: Decimal, 1 decimal
+Social Score =
+VAR y = [Selected Year]
+RETURN
+    CALCULATE ( AVERAGE ( Scores[score] ), Scores[pillar] = "Social", Years[year] = y )
+
+// Format: Decimal, 1 decimal
+Governance Score =
+VAR y = [Selected Year]
+RETURN
+    CALCULATE ( AVERAGE ( Scores[score] ), Scores[pillar] = "Governance", Years[year] = y )
+
+// Use this one when Scores[pillar] is on the axis, legend or columns.  Format: Decimal, 1 decimal
+Pillar Score =
+VAR y = [Selected Year]
+RETURN
+    CALCULATE ( AVERAGE ( Scores[score] ), Years[year] = y )
+
+
+// ---------- 3. Rank and change ----------
+
+// Blank unless exactly one country is in context.  Format: Whole number
+ESG Rank =
+VAR y = [Selected Year]
+RETURN
+    IF (
+        HASONEVALUE ( Country[iso3] ),
+        CALCULATE ( MIN ( Scores[rank_in_year] ), Scores[pillar] = "ESG", Years[year] = y )
+    )
+
+// Countries that have an ESG score in the selected year.  Format: Whole number
+Ranked Countries =
+VAR y = [Selected Year]
+RETURN
+    CALCULATE (
+        DISTINCTCOUNT ( Scores[iso3] ),
+        Scores[pillar] = "ESG",
+        Years[year] = y,
+        REMOVEFILTERS ( Country )
+    )
+
+// Text, for a card: "31 of 181"
+ESG Rank Label =
+IF ( NOT ISBLANK ( [ESG Rank] ), [ESG Rank] & " of " & [Ranked Countries] )
+
+// Points gained or lost against five years earlier.  Format: +0.0;-0.0;0.0
+ESG Score 5Y Change =
+VAR y = [Selected Year]
+VAR cur = [ESG Score]
+VAR prev =
+    CALCULATE ( AVERAGE ( Scores[score] ), Scores[pillar] = "ESG", Years[year] = y - 5 )
+RETURN
+    IF ( NOT ISBLANK ( cur ) && NOT ISBLANK ( prev ), cur - prev )
+
+
+// ---------- 4. Peer comparison ----------
+
+// Average of all countries, ignoring any country or region filter.  Format: Decimal, 1 decimal
+World ESG Score = CALCULATE ( [ESG Score], REMOVEFILTERS ( Country ) )
+
+// Average of the selected country's region.  Format: Decimal, 1 decimal
+Region ESG Score =
+VAR r = SELECTEDVALUE ( Country[region] )
+RETURN
+    IF (
+        NOT ISBLANK ( r ),
+        CALCULATE ( [ESG Score], REMOVEFILTERS ( Country ), Country[region] = r )
+    )
+
+// Format: +0.0;-0.0;0.0
+ESG vs Region =
+IF (
+    NOT ISBLANK ( [ESG Score] ) && NOT ISBLANK ( [Region ESG Score] ),
+    [ESG Score] - [Region ESG Score]
+)
+
+
+// ---------- 5. Indicator detail ----------
+
+// The raw value. Blank unless one indicator is in context, because values
+// of different indicators cannot be averaged.  Format: Decimal, 2 decimals
+Indicator Value =
+VAR y = [Selected Year]
+RETURN
+    IF (
+        HASONEVALUE ( Indicator[indicator_id] ),
+        CALCULATE ( AVERAGE ( Observations[value] ), Years[year] = y )
+    )
+
+// Percentile score of the indicator(s) in context.  Format: Decimal, 1 decimal
+Indicator Score =
+VAR y = [Selected Year]
+RETURN
+    CALCULATE ( AVERAGE ( Observations[score] ), Years[year] = y )
+
+// The year the value shown was actually reported.  Format: Year
+Value Reported In =
+VAR y = [Selected Year]
+RETURN
+    CALCULATE ( MAX ( Observations[reported_year] ), Years[year] = y )
+
+
+// ---------- 6. Data gaps (Latest table; not affected by the year slicer) ----------
+
+// Country-indicator series with at least one value.  Format: Whole number
+Series With Data = COUNTROWS ( Latest )
+
+// Format: Whole number
+Series Never Reported = [Country Count] * [Indicator Count] - [Series With Data]
+
+// Format: Decimal, 1 decimal
+Avg Years Since Update = AVERAGE ( Latest[years_since_update] )
+
+// Series whose newest value is five or more years old.  Format: Whole number
+Stale Series =
+CALCULATE ( COUNTROWS ( Latest ), Latest[years_since_update] >= 5 )
+
+// Format: Percentage, 1 decimal
+Stale Series % = DIVIDE ( [Stale Series], [Series With Data] )
+
+
+// ---------- 7. Dynamic titles ----------
+
+Profile Title =
+"ESG profile: "
+    & SELECTEDVALUE ( Country[country], "select one country" )
+    & ", " & [Selected Year]
+
+Overview Title = "Sovereign ESG scores, " & [Selected Year]

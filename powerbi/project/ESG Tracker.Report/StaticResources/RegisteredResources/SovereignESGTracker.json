@@ -1,0 +1,19 @@
+{
+  "name": "Sovereign ESG Tracker",
+  "dataColors": ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"],
+  "background": "#fcfcfb",
+  "foreground": "#0b0b0b",
+  "tableAccent": "#2a78d6",
+  "good": "#0ca30c",
+  "neutral": "#c3c2b7",
+  "bad": "#d03b3b",
+  "maximum": "#256abf",
+  "center": "#cfe0f6",
+  "minimum": "#f0efec",
+  "textClasses": {
+    "callout": { "fontSize": 28, "fontFace": "Segoe UI Semibold", "color": "#0b0b0b" },
+    "title": { "fontSize": 12, "fontFace": "Segoe UI Semibold", "color": "#0b0b0b" },
+    "header": { "fontSize": 10, "fontFace": "Segoe UI Semibold", "color": "#52514e" },
+    "label": { "fontSize": 10, "fontFace": "Segoe UI", "color": "#52514e" }
+  }
+}

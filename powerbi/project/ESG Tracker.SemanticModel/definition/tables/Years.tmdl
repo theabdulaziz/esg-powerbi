@@ -1,0 +1,23 @@
+table Years
+	lineageTag: 22b3129d-59ce-5466-b05a-62803bc5967d
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: e923ac51-0a20-5585-8afc-925560a67f56
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = User
+
+	partition Years = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(Web.Contents(DataSource, [RelativePath = "dim_year.csv"]), [Delimiter = ",", Columns = 1, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"year", Int64.Type}}, "en-US")
+				in
+					Typed
+
+	annotation PBI_ResultType = Table

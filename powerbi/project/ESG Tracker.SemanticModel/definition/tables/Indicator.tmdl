@@ -1,0 +1,70 @@
+table Indicator
+	lineageTag: 367357e0-fea2-5b75-977a-cd9a61345236
+
+	column indicator_id
+		dataType: string
+		lineageTag: 955a874c-4c96-5813-9f8b-9aa44a04c15c
+		summarizeBy: none
+		sourceColumn: indicator_id
+
+		annotation SummarizationSetBy = User
+
+	column indicator
+		dataType: string
+		lineageTag: 63553c81-fe81-5422-b19e-d14178b4a22a
+		summarizeBy: none
+		sourceColumn: indicator
+
+		annotation SummarizationSetBy = User
+
+	column pillar
+		dataType: string
+		lineageTag: bd45b21d-b083-5878-b6e5-aa340d28ca02
+		summarizeBy: none
+		sourceColumn: pillar
+
+		annotation SummarizationSetBy = User
+
+	column theme
+		dataType: string
+		lineageTag: 3a7dc3e1-2dec-5418-89c6-34635b229ea3
+		summarizeBy: none
+		sourceColumn: theme
+
+		annotation SummarizationSetBy = User
+
+	column direction
+		dataType: string
+		lineageTag: 391e7c2e-5c3d-5b72-8ef8-8ad15fd313a5
+		summarizeBy: none
+		sourceColumn: direction
+
+		annotation SummarizationSetBy = User
+
+	column in_score
+		dataType: boolean
+		lineageTag: fb924377-68d3-58aa-913b-5db51c3acec4
+		summarizeBy: none
+		sourceColumn: in_score
+
+		annotation SummarizationSetBy = User
+
+	column direction_reason
+		dataType: string
+		lineageTag: abfce7d8-a4c9-5af1-83f4-40f4a1ce2f90
+		summarizeBy: none
+		sourceColumn: direction_reason
+
+		annotation SummarizationSetBy = User
+
+	partition Indicator = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(Web.Contents(DataSource, [RelativePath = "dim_indicator.csv"]), [Delimiter = ",", Columns = 7, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"indicator_id", type text}, {"indicator", type text}, {"pillar", type text}, {"theme", type text}, {"direction", type text}, {"in_score", type logical}, {"direction_reason", type text}}, "en-US")
+				in
+					Typed
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,76 @@
+table Scores
+	lineageTag: c4ae58db-4eba-5e6a-8642-0abee136b379
+
+	column iso3
+		dataType: string
+		isHidden
+		lineageTag: 05882563-37e1-528e-9111-c09c04077bd5
+		summarizeBy: none
+		sourceColumn: iso3
+
+		annotation SummarizationSetBy = User
+
+	column year
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ba370993-1457-5f1e-9542-d465852f1d1c
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = User
+
+	column pillar
+		dataType: string
+		lineageTag: 64912d08-36f4-5fa9-88fb-920df0cdaed8
+		summarizeBy: none
+		sourceColumn: pillar
+
+		annotation SummarizationSetBy = User
+
+	column score
+		dataType: double
+		lineageTag: 12db4c44-fa1e-58b1-96a3-ecec75aa785c
+		summarizeBy: none
+		sourceColumn: score
+
+		annotation SummarizationSetBy = User
+
+	column indicators_used
+		dataType: int64
+		formatString: 0
+		lineageTag: d0cc7733-cee7-5d60-9c60-5b496157a2e6
+		summarizeBy: none
+		sourceColumn: indicators_used
+
+		annotation SummarizationSetBy = User
+
+	column indicators_possible
+		dataType: int64
+		formatString: 0
+		lineageTag: d2f41b05-86ca-5e22-ab91-507f8bdc7650
+		summarizeBy: none
+		sourceColumn: indicators_possible
+
+		annotation SummarizationSetBy = User
+
+	column rank_in_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 9afa59ba-70cb-5466-b160-849bf915280d
+		summarizeBy: none
+		sourceColumn: rank_in_year
+
+		annotation SummarizationSetBy = User
+
+	partition Scores = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(Web.Contents(DataSource, [RelativePath = "fact_scores.csv"]), [Delimiter = ",", Columns = 7, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"iso3", type text}, {"year", Int64.Type}, {"pillar", type text}, {"score", type number}, {"indicators_used", Int64.Type}, {"indicators_possible", Int64.Type}, {"rank_in_year", Int64.Type}}, "en-US")
+				in
+					Typed
+
+	annotation PBI_ResultType = Table

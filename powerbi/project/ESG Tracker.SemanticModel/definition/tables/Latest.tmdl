@@ -1,0 +1,58 @@
+table Latest
+	lineageTag: 0d8905c1-d992-559b-9b8d-e4c682860e83
+
+	column iso3
+		dataType: string
+		isHidden
+		lineageTag: e961595d-920f-5587-9eed-961b5ed71193
+		summarizeBy: none
+		sourceColumn: iso3
+
+		annotation SummarizationSetBy = User
+
+	column indicator_id
+		dataType: string
+		isHidden
+		lineageTag: 60bebe74-9d5e-5949-8400-57c74021b697
+		summarizeBy: none
+		sourceColumn: indicator_id
+
+		annotation SummarizationSetBy = User
+
+	column latest_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 817c8425-2a8b-5500-8b2b-82ca2d0e2fd8
+		summarizeBy: none
+		sourceColumn: latest_year
+
+		annotation SummarizationSetBy = User
+
+	column latest_value
+		dataType: double
+		lineageTag: b3a46a19-3ace-52e5-8c39-45d358e6e233
+		summarizeBy: none
+		sourceColumn: latest_value
+
+		annotation SummarizationSetBy = User
+
+	column years_since_update
+		dataType: int64
+		formatString: 0
+		lineageTag: a043cff6-55c2-5336-88bf-acbd1fd466de
+		summarizeBy: none
+		sourceColumn: years_since_update
+
+		annotation SummarizationSetBy = User
+
+	partition Latest = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(Web.Contents(DataSource, [RelativePath = "fact_latest.csv"]), [Delimiter = ",", Columns = 5, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"iso3", type text}, {"indicator_id", type text}, {"latest_year", Int64.Type}, {"latest_value", type number}, {"years_since_update", Int64.Type}}, "en-US")
+				in
+					Typed
+
+	annotation PBI_ResultType = Table

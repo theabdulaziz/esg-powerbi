@@ -1,0 +1,10 @@
+/// Folder that holds the six model tables. Point it at a local folder URL to work offline.
+expression DataSource =
+		"https://raw.githubusercontent.com/theabdulaziz/esg-powerbi/main/data/model/" meta [
+			IsParameterQuery = true,
+			Type = "Text",
+			IsParameterQueryRequired = true
+		]
+	lineageTag: 3d82f13c-c25c-5608-bb93-70667da18c05
+
+	annotation PBI_ResultType = Text

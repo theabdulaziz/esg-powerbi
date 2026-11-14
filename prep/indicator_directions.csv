@@ -1,0 +1,68 @@
+indicator_id,direction,reason
+AG.LND.AGRI.ZS,context,Share of land farmed is neither good nor bad in itself
+AG.LND.FRST.ZS,context,Depends on natural geography; a desert country is not a poor performer
+AG.PRD.FOOD.XD,context,Index relative to each country's own base period; not comparable across countries
+EG.EGY.PRIM.PP.KD,lower_better,Less energy per unit of output
+EG.ELC.COAL.ZS,lower_better,Coal is the most carbon-intensive source of electricity
+EG.ELC.RNEW.ZS,higher_better,Larger share of electricity from renewables
+EG.FEC.RNEW.ZS,higher_better,Larger share of energy use from renewables
+EG.IMP.CONS.ZS,context,Importing energy is a security consideration with no clear direction
+EG.USE.COMM.FO.ZS,lower_better,Smaller share of energy from fossil fuels
+EG.USE.PCAP.KG.OE,context,Tracks income and climate as much as efficiency
+EN.ATM.CO2E.PC,lower_better,Lower emissions per person
+EN.ATM.METH.PC,lower_better,Lower emissions per person
+EN.ATM.NOXE.PC,lower_better,Lower emissions per person
+EN.ATM.PM25.MC.M3,lower_better,Cleaner air
+EN.CLC.CDDY.XD,context,Single projection for 2050; not an annual observation
+EN.CLC.GHGR.MT.CE,context,Absolute tonnes not scaled by country size; sparse
+EN.CLC.HEAT.XD,context,Single projection for 2050; not an annual observation
+EN.CLC.MDAT.ZS,context,One historical average per country; no time series
+EN.CLC.PRCP.XD,context,Single projection for 2050; not an annual observation
+EN.CLC.SPEI.XD,context,Single projection for 2050; not an annual observation
+EN.MAM.THRD.NO,context,Raw count not scaled by number of species present
+EN.POP.DNST,context,Descriptive
+ER.H2O.FWTL.ZS,lower_better,Less pressure on internal freshwater resources
+ER.PTD.TOTL.ZS,higher_better,More territory under protection
+NY.ADJ.DFOR.GN.ZS,lower_better,Less forest depletion relative to income
+NY.ADJ.DRES.GN.ZS,lower_better,Less natural resource depletion relative to income
+CC.EST,higher_better,Worldwide Governance Indicator; higher is better governance
+GB.XPD.RSDV.GD.ZS,higher_better,More investment in research and development
+GE.EST,higher_better,Worldwide Governance Indicator; higher is better governance
+IC.BUS.EASE.XQ,lower_better,Rank where 1 is the most business-friendly
+IC.LGL.CRED.XQ,higher_better,Stronger legal rights for borrowers and lenders
+IP.PAT.RESD,context,Raw count not scaled by population
+IT.NET.USER.ZS,higher_better,Wider internet access
+PV.EST,higher_better,Worldwide Governance Indicator; higher is better governance
+RL.EST,higher_better,Worldwide Governance Indicator; higher is better governance
+RQ.EST,higher_better,Worldwide Governance Indicator; higher is better governance
+SP.UWT.TFRT,lower_better,Less unmet need for contraception
+VA.EST,higher_better,Worldwide Governance Indicator; higher is better governance
+EG.CFT.ACCS.ZS,higher_better,Wider access to clean cooking fuels
+EG.ELC.ACCS.ZS,higher_better,Wider access to electricity
+IP.JRN.ARTC.SC,context,Raw count not scaled by population
+NV.AGR.TOTL.ZS,context,Structure of the economy; no clear direction
+NY.GDP.MKTP.KD.ZG,context,Volatile year to year and not a measure of social outcomes
+SE.ADT.LITR.ZS,higher_better,Higher adult literacy
+SE.ENR.PRSC.FM.ZS,context,Best value is parity (1.0) so it is not monotonic
+SE.PRM.ENRR,context,Gross rate can exceed 100 through over-age enrolment
+SE.XPD.TOTL.GB.ZS,higher_better,Larger share of public spending on education
+SG.GEN.PARL.ZS,higher_better,More women in parliament
+SH.DTH.COMM.ZS,lower_better,Fewer deaths from preventable causes
+SH.DYN.MORT,lower_better,Lower child mortality
+SH.H2O.SMDW.ZS,higher_better,Wider access to safe drinking water
+SH.MED.BEDS.ZS,higher_better,More hospital capacity
+SH.STA.OWAD.ZS,lower_better,Lower prevalence of overweight
+SH.STA.SMSS.ZS,higher_better,Wider access to safe sanitation
+SI.DST.FRST.20,higher_better,Larger income share for the poorest fifth
+SI.POV.GINI,lower_better,Lower income inequality
+SI.POV.NAHC,lower_better,Lower poverty
+SI.SPR.PCAP.ZG,context,One observation per country; no time series
+SL.TLF.0714.ZS,lower_better,Less child labour
+SL.TLF.ACTI.ZS,context,Reflects demographics and schooling as well as opportunity
+SL.TLF.CACT.FM.ZS,higher_better,Women's labour force participation closer to men's
+SL.UEM.TOTL.ZS,lower_better,Lower unemployment
+SM.POP.NETM,context,Descriptive
+SN.ITK.DEFC.ZS,lower_better,Less undernourishment
+SP.DYN.LE00.IN,higher_better,Longer life expectancy
+SP.DYN.TFRT.IN,context,Descriptive
+SP.POP.65UP.TO.ZS,context,Descriptive
